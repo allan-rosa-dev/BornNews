@@ -9,17 +9,27 @@
 /* Begin PBXBuildFile section */
 		ACD5A990282D9B78002B5ADD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A98F282D9B78002B5ADD /* AppDelegate.swift */; };
 		ACD5A992282D9B78002B5ADD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A991282D9B78002B5ADD /* SceneDelegate.swift */; };
-		ACD5A994282D9B78002B5ADD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A993282D9B78002B5ADD /* ViewController.swift */; };
+		ACD5A994282D9B78002B5ADD /* ArticleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A993282D9B78002B5ADD /* ArticleListViewController.swift */; };
 		ACD5A999282D9B7D002B5ADD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACD5A998282D9B7D002B5ADD /* Assets.xcassets */; };
+		ACD5A9A4282D9C9B002B5ADD /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9A3282D9C9B002B5ADD /* NewsService.swift */; };
+		ACD5A9A8282DAE6C002B5ADD /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9A7282DAE6C002B5ADD /* Article.swift */; };
+		ACD5A9AB282DAED6002B5ADD /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9AA282DAED6002B5ADD /* ResponseObject.swift */; };
+		ACD5A9B1282DB432002B5ADD /* ServiceEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9B0282DB432002B5ADD /* ServiceEnums.swift */; };
+		ACD5A9B3282E1F6C002B5ADD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9B2282E1F6C002B5ADD /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ACD5A98C282D9B78002B5ADD /* BornLogicNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BornLogicNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACD5A98F282D9B78002B5ADD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACD5A991282D9B78002B5ADD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		ACD5A993282D9B78002B5ADD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACD5A993282D9B78002B5ADD /* ArticleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListViewController.swift; sourceTree = "<group>"; };
 		ACD5A998282D9B7D002B5ADD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACD5A99D282D9B7D002B5ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACD5A9A3282D9C9B002B5ADD /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
+		ACD5A9A7282DAE6C002B5ADD /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
+		ACD5A9AA282DAED6002B5ADD /* ResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
+		ACD5A9B0282DB432002B5ADD /* ServiceEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceEnums.swift; sourceTree = "<group>"; };
+		ACD5A9B2282E1F6C002B5ADD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,11 +64,56 @@
 			children = (
 				ACD5A98F282D9B78002B5ADD /* AppDelegate.swift */,
 				ACD5A991282D9B78002B5ADD /* SceneDelegate.swift */,
-				ACD5A993282D9B78002B5ADD /* ViewController.swift */,
+				ACD5A9B2282E1F6C002B5ADD /* Constants.swift */,
+				ACD5A9A9282DAE71002B5ADD /* Model */,
+				ACD5A9A6282D9CB0002B5ADD /* View */,
+				ACD5A9AD282DB0C7002B5ADD /* ViewModel */,
+				ACD5A9A5282D9CA5002B5ADD /* Service */,
 				ACD5A998282D9B7D002B5ADD /* Assets.xcassets */,
 				ACD5A99D282D9B7D002B5ADD /* Info.plist */,
 			);
 			path = BornLogicNews;
+			sourceTree = "<group>";
+		};
+		ACD5A9A5282D9CA5002B5ADD /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5A9A3282D9C9B002B5ADD /* NewsService.swift */,
+				ACD5A9AC282DAEE4002B5ADD /* API Model */,
+				ACD5A9B0282DB432002B5ADD /* ServiceEnums.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		ACD5A9A6282D9CB0002B5ADD /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5A993282D9B78002B5ADD /* ArticleListViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		ACD5A9A9282DAE71002B5ADD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ACD5A9AA282DAED6002B5ADD /* ResponseObject.swift */,
+				ACD5A9A7282DAE6C002B5ADD /* Article.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ACD5A9AC282DAEE4002B5ADD /* API Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "API Model";
+			sourceTree = "<group>";
+		};
+		ACD5A9AD282DB0C7002B5ADD /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,9 +185,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACD5A994282D9B78002B5ADD /* ViewController.swift in Sources */,
+				ACD5A994282D9B78002B5ADD /* ArticleListViewController.swift in Sources */,
+				ACD5A9AB282DAED6002B5ADD /* ResponseObject.swift in Sources */,
+				ACD5A9B1282DB432002B5ADD /* ServiceEnums.swift in Sources */,
 				ACD5A990282D9B78002B5ADD /* AppDelegate.swift in Sources */,
+				ACD5A9A4282D9C9B002B5ADD /* NewsService.swift in Sources */,
 				ACD5A992282D9B78002B5ADD /* SceneDelegate.swift in Sources */,
+				ACD5A9A8282DAE6C002B5ADD /* Article.swift in Sources */,
+				ACD5A9B3282E1F6C002B5ADD /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
