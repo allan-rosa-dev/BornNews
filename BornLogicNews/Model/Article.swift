@@ -44,7 +44,19 @@ struct Article {
 	init(){
 		author = "Allan Rosa"
 		title = "Welcome to BornNews!"
-		description = "To start browsing some news, type something in Search for News and hit enter or tap the BornNews logo!\n\nYou can also select to receive language specific news (English and Portuguese supported only), as well as sort the news to display either Most Popular, Recent, Relevant ones first. \n\nIf you want to read more details, just tap the article.\n\nEnjoy!"
+		description =
+		"""
+		If this is your first time using NewsAPI, you will need an API Key from NewsAPI.org. You can longpress anywhere on the screen to toggle the API Key text field (the topmost field in this screen). Once you enter your API Key, hit return on the textfield to save it.
+		If your API Key is incorrect/invalid, you won't be able to fetch any news.
+
+		To start browsing some news, type something in Search for News and hit enter or tap the BornNews logo!
+
+		You can also select to receive language specific news (English and Portuguese supported only), as well as sort the news to display either Most Popular, Recent, Relevant ones first.
+
+		If you want to read more details, just tap the article.
+
+		Enjoy!
+		"""
 		url = ""
 		publishDate = Date.now
 		let dummy = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."

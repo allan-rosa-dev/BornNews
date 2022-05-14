@@ -27,6 +27,22 @@ final class ArticleListViewController: UIViewController {
 		return stackView
 	}()
 	
+	lazy var apiKeyTextField: UITextField = {
+		let textField = UITextField()
+		textField.font = K.Design.textFont
+		textField.textColor = K.Design.textFieldFontColor
+		textField.backgroundColor = K.Design.textFieldBackgroundColor
+		textField.placeholder = "Enter your NewsAPI Key here"
+		textField.text = UserDefaults.standard.string(forKey: K.Defaults.apiKey)
+		if textField.text != nil { textField.isHidden = true }
+		textField.textAlignment = .center
+		textField.layer.cornerRadius = 10
+		textField.clipsToBounds = true
+		textField.clearsOnBeginEditing = true
+		
+		return textField
+	}()
+	
 	lazy var titleStackView: UIStackView = {
 		let stackView = UIStackView()
 		stackView.axis = .horizontal
@@ -114,6 +130,7 @@ final class ArticleListViewController: UIViewController {
 		titleStackView.addArrangedSubview(logoImageView)
 		titleStackView.addArrangedSubview(searchTextField)
 		
+		topStackView.addArrangedSubview(apiKeyTextField)
 		topStackView.addArrangedSubview(titleStackView)
 		topStackView.addArrangedSubview(queryParametersStackView)
 		
@@ -125,6 +142,7 @@ final class ArticleListViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			logoImageView.widthAnchor.constraint(equalTo: searchTextField.widthAnchor, multiplier: 0.3),
 			searchTextField.heightAnchor.constraint(equalTo: languageTextField.heightAnchor, multiplier: 1),
+			apiKeyTextField.heightAnchor.constraint(equalTo: languageTextField.heightAnchor, multiplier: 1),
 			languageTextField.widthAnchor.constraint(equalTo: queryParametersStackView.widthAnchor, multiplier: 0.5)
 		])
 		
@@ -152,6 +170,7 @@ final class ArticleListViewController: UIViewController {
 		
 		articlesTableView.register(ArticleCell.self, forCellReuseIdentifier: String(describing: ArticleCell.self))
 
+		apiKeyTextField.delegate = self
 		searchTextField.delegate = self
 		languageTextField.delegate = self
 		sortByTextField.delegate = self
@@ -186,6 +205,9 @@ final class ArticleListViewController: UIViewController {
 		searchTapGesture.cancelsTouchesInView = false
 		logoImageView.addGestureRecognizer(searchTapGesture)
 		logoImageView.isUserInteractionEnabled = true
+		
+		let toggleApiTextFieldGesture = UILongPressGestureRecognizer(target: self, action: #selector(toggleApiKeyTextField(_:)))
+		view.addGestureRecognizer(toggleApiTextFieldGesture)
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {
@@ -196,7 +218,6 @@ final class ArticleListViewController: UIViewController {
 	
 	//MARK: - Helper Functions & Action Selectors
 	@objc func fetchNews(){
-		print("FETCHING NEWS! #####")
 		guard let searchText = searchTextField.text, searchText != "" else { return }
 		articlesTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 		articleListViewModel.fetchArticles(searchingFor: searchText,
@@ -205,6 +226,14 @@ final class ArticleListViewController: UIViewController {
 		{ [weak self] in
 			guard let self = self else { return }
 			self.articlesTableView.reloadData()
+		}
+	}
+	
+	@objc func toggleApiKeyTextField(_ sender: UILongPressGestureRecognizer?){
+		if let sender = sender {
+			if sender.state == .ended {
+				apiKeyTextField.isHidden = !apiKeyTextField.isHidden
+			}
 		}
 	}
 }
@@ -242,12 +271,23 @@ extension ArticleListViewController: UITableViewDelegate, UITableViewDataSource 
 extension ArticleListViewController: UITextFieldDelegate {
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		guard textField == searchTextField else { return false }
-		guard let searchText = textField.text else { return false }
+		guard textField == searchTextField || textField == apiKeyTextField else { return false }
+		guard let text = textField.text else { return false }
+		
+		if textField == apiKeyTextField {
+			UserDefaults.standard.set(text, forKey: K.Defaults.apiKey)
+			let alertView = UIAlertController(title: "API Key Set as:", message: text, preferredStyle: .alert)
+			let confirmAction = UIAlertAction(title: "Ok", style: .default) { _ in
+				self.dismiss(animated: true)
+				self.apiKeyTextField.isHidden = true
+			}
+			alertView.addAction(confirmAction)
+			self.present(alertView, animated: true)
+		}
+		if textField == searchTextField {
+			fetchNews()
+		}
 		textField.resignFirstResponder()
-		
-		fetchNews()
-		
 		return true
 	}
 }

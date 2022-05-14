@@ -21,4 +21,7 @@ struct K {
 		static let backgroundYellow = UIColor(named: "background-yellow")
 		static let backgroundWhite = UIColor(named: "background-white")
 	}
+	struct Defaults {
+		static let apiKey = "apiKey"
+	}
 }

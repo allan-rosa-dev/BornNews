@@ -26,8 +26,9 @@ struct NewsService {
 		if let sortParameter = sortParameter {
 			queryURL += "&sortBy=" + sortParameter.code
 		}
-		let apiKey = "42ae4dc7876a4d76bf500480858cb306"
-		queryURL += "&apiKey=" + apiKey
+		if let apiKey = UserDefaults.standard.string(forKey: K.Defaults.apiKey) {
+			queryURL += "&apiKey=" + apiKey
+		}
 		
 		fetchData(urlString: queryURL) { (result: Result<ResponseObject, Error>) in
 			switch result {
@@ -36,6 +37,7 @@ struct NewsService {
 					completion(responseObject.articles)
 					
 				case .failure(let err):
+					// Known issue: Not treating invalid NewsAPI returns such as Invalid API Key or invalid Query parameters
 					print("--- Failed to fetch data ---")
 					print(err)
 					completion([])
