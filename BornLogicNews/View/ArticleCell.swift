@@ -87,7 +87,7 @@ class ArticleCell: UITableViewCell {
 			articleImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Layout.halfMargin),
 			articleImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Layout.margin),
 			articleImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Layout.margin),
-			articleImageView.heightAnchor.constraint(equalTo: articleImageView.widthAnchor, constant: -Layout.margin),
+			articleImageView.heightAnchor.constraint(equalTo: articleImageView.widthAnchor),
 			
 			descriptionLabel.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: Layout.halfMargin),
 			descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Layout.margin),

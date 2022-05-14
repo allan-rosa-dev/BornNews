@@ -17,7 +17,7 @@ protocol ArticleObjectProtocol {
 	var content: String { get }
 }
 
-struct ArticleObject: Decodable {
+struct ArticleObject: Decodable, ArticleObjectProtocol {
 	let author: String?
 	let title: String
 	let description: String

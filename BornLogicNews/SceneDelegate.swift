@@ -16,7 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		
 		guard let windowScene = scene as? UIWindowScene else { return }
 		window = UIWindow(windowScene: windowScene)
-		window?.rootViewController = ArticleListViewController() // this is the Initial View Controller
+		
+		let navigationController = UINavigationController()
+		navigationController.title = "BornNews"
+		let initialViewController = ArticleListViewController()
+		navigationController.addChild(initialViewController)
+		
+		window?.rootViewController = navigationController
 		window?.makeKeyAndVisible()
 	}
 

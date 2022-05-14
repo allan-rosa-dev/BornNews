@@ -37,7 +37,7 @@ final class ArticleListViewController: UIViewController {
 		return stackView
 	}()
 	
-	lazy var logoImageView: UIImageView = {
+	lazy private var logoImageView: UIImageView = {
 		let imageView = UIImageView()
 		imageView.image = UIImage(named: "logo-white")
 		imageView.contentMode = .scaleAspectFill
@@ -45,7 +45,7 @@ final class ArticleListViewController: UIViewController {
 		return imageView
 	}()
 	
-	lazy var searchTextField: UITextField = {
+	lazy private var searchTextField: UITextField = {
 		let textField = UITextField()
 		textField.font = K.Design.textFont
 		textField.textColor = K.Design.textFieldFontColor
@@ -59,7 +59,7 @@ final class ArticleListViewController: UIViewController {
 		return textField
 	}()
 	
-	lazy var queryParametersStackView: UIStackView = {
+	lazy private var queryParametersStackView: UIStackView = {
 		let stackView = UIStackView()
 		stackView.axis = .horizontal
 		stackView.distribution = .fill
@@ -69,7 +69,7 @@ final class ArticleListViewController: UIViewController {
 		return stackView
 	}()
 	
-	lazy var languageTextField: UITextField = {
+	lazy private var languageTextField: UITextField = {
 		let textField = UITextField()
 		textField.font = K.Design.textFont
 		textField.textColor = K.Design.textFieldFontColor
@@ -82,7 +82,7 @@ final class ArticleListViewController: UIViewController {
 		return textField
 	}()
 	
-	lazy var sortByTextField: UITextField = {
+	lazy private var sortByTextField: UITextField = {
 		let textField = UITextField()
 		textField.font = K.Design.textFont
 		textField.textColor = K.Design.textFieldFontColor
@@ -95,7 +95,7 @@ final class ArticleListViewController: UIViewController {
 		return textField
 	}()
 	
-	lazy var articlesTableView: UITableView = {
+	lazy private var articlesTableView: UITableView = {
 		let tableView = UITableView()
 		tableView.backgroundColor = K.Design.backgroundGreen
 		tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,8 +103,8 @@ final class ArticleListViewController: UIViewController {
 		return tableView
 	}()
 	
-	lazy var languagePickerView = UIPickerView()
-	lazy var sortParameterPickerView = UIPickerView()
+	lazy private var languagePickerView = UIPickerView()
+	lazy private var sortParameterPickerView = UIPickerView()
 	
 	//MARK: - View Code Interface Building
 	private func buildViewHierarchy(){
@@ -144,6 +144,7 @@ final class ArticleListViewController: UIViewController {
 	}
 	
 	private func configureViews(){
+		self.navigationController?.isNavigationBarHidden = true
 		self.view.backgroundColor = K.Design.backgroundGreen
 		articlesTableView.backgroundColor = K.Design.backgroundYellow
 		
@@ -151,8 +152,7 @@ final class ArticleListViewController: UIViewController {
 		articlesTableView.dataSource = self
 		
 		articlesTableView.register(ArticleCell.self, forCellReuseIdentifier: String(describing: ArticleCell.self))
-		articlesTableView.allowsSelection = false
-		
+
 		searchTextField.delegate = self
 		languageTextField.delegate = self
 		sortByTextField.delegate = self
@@ -178,6 +178,7 @@ final class ArticleListViewController: UIViewController {
 		setupConstraints()
 		configureViews()
 		
+		// Hide any input views when user taps on the view
 		let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
 		view.addGestureRecognizer(tapGesture)
 		tapGesture.cancelsTouchesInView = false
@@ -193,16 +194,24 @@ extension ArticleListViewController: UITableViewDelegate, UITableViewDataSource 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = articlesTableView.dequeueReusableCell(withIdentifier: String(describing: ArticleCell.self)) as? ArticleCell else { return UITableViewCell() }
 		guard indexPath.row < articleListViewModel.articles.count else { return UITableViewCell() }
+		
 		let article = articleListViewModel.articles[indexPath.row]
 		
 		cell.configureView(withTitle: "[\(indexPath.row+1)/\(articleListViewModel.articles.count)] " + article.title, withImage: article.image, withDescription: article.description, withAuthor: article.author)
+		cell.selectionStyle = .none
 		
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let article = articleListViewModel.articles[indexPath.row]
+		let detailsViewModel = ArticleDetailsViewModel(from: article)
+		let detailsView = ArticleDetailsViewController()
+		detailsView.articleDetailsViewModel = detailsViewModel
 		
+		navigationController?.pushViewController(detailsView, animated: true)
 	}
+	
 }
 
 //MARK: - UITextField Delegate
