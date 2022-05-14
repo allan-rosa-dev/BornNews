@@ -15,25 +15,28 @@ protocol ArticleListViewModelProtocol {
 }
 
 final class ArticleListViewModel: ArticleListViewModelProtocol {
-	var articles: [Article] = []
+	var articles: [Article] = [Article()]
 	var isFetching: Bool = false
 	
 	func fetchArticles(searchingFor searchText: String, in language: Language? = nil, sortingBy sortParameter: QuerySortParameter? = nil, completion: @escaping ()->() ){
 		guard !searchText.isEmpty else { return }
 		guard !isFetching else { return }
 		
-		//		articles = [
-		//			Article(author: "Dude", title: "McDude is pog", description: "This is some big ass text which should go on for a good while and make it very long for random purposes which I don't like but also kinda think it's very much necessary", url: "lol", urlToImage: "lol", publishedAt: "somedate", content: "bruh"),
-		//			Article(author: nil, title: "RickRolled", description: "Never gonna give you up\nNever gonna let you down\nNever gonna turn around\nAnd desert you\nNever gonna make you cry\nNever gonna say goodbye\nNever gonna tell a lie", url: "lol", urlToImage: "lol", publishedAt: "somedate2", content: "lmao")
-		//		]
-		
 		isFetching = true
+		articles = []
 		NewsService.shared.fetchNews(searchingFor: searchText, inLanguage: language, sortedBy: sortParameter) { [weak self] fetchedArticles in
 			guard let self = self else { return }
 			self.isFetching = false
 			
 			fetchedArticles.forEach { articleObject in
-				if let url = URL(string: articleObject.urlToImage) {
+				if var url = URL(string: articleObject.urlToImage ?? "") {
+					// Try to access https instead of http
+					if url.scheme == "http" {
+						var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+						urlComponents?.scheme = "https"
+						url = urlComponents!.url! // Bad practice, wouldn't do in a real world application
+					}
+
 					DispatchQueue.global().async { [weak self] in
 						guard let self = self else { return }
 						if let data = try? Data(contentsOf: url){
@@ -42,6 +45,12 @@ final class ArticleListViewModel: ArticleListViewModelProtocol {
 								completion()
 							}
 						}
+					}
+				}
+				else {
+					self.articles.append(Article(from: articleObject))
+					DispatchQueue.main.async {
+						completion()
 					}
 				}
 			}

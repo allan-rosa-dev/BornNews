@@ -19,6 +19,8 @@
 		ACD5A9B7282E4030002B5ADD /* ArticleListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9B6282E4030002B5ADD /* ArticleListViewModel.swift */; };
 		ACD5A9B9282E4A74002B5ADD /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9B8282E4A74002B5ADD /* ArticleCell.swift */; };
 		ACD5A9BB282F1054002B5ADD /* ArticleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9BA282F1053002B5ADD /* ArticleObject.swift */; };
+		ACD5A9BD282F8B61002B5ADD /* ArticleDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9BC282F8B61002B5ADD /* ArticleDetailsViewController.swift */; };
+		ACD5A9BF282F8E43002B5ADD /* ArticleDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD5A9BE282F8E43002B5ADD /* ArticleDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		ACD5A9B6282E4030002B5ADD /* ArticleListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleListViewModel.swift; sourceTree = "<group>"; };
 		ACD5A9B8282E4A74002B5ADD /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		ACD5A9BA282F1053002B5ADD /* ArticleObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleObject.swift; sourceTree = "<group>"; };
+		ACD5A9BC282F8B61002B5ADD /* ArticleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsViewController.swift; sourceTree = "<group>"; };
+		ACD5A9BE282F8E43002B5ADD /* ArticleDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				ACD5A9A3282D9C9B002B5ADD /* NewsService.swift */,
-				ACD5A9AC282DAEE4002B5ADD /* API Model */,
 				ACD5A9B0282DB432002B5ADD /* ServiceEnums.swift */,
 			);
 			path = Service;
@@ -96,6 +99,7 @@
 			children = (
 				ACD5A993282D9B78002B5ADD /* ArticleListViewController.swift */,
 				ACD5A9B8282E4A74002B5ADD /* ArticleCell.swift */,
+				ACD5A9BC282F8B61002B5ADD /* ArticleDetailsViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -103,8 +107,7 @@
 		ACD5A9A9282DAE71002B5ADD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				ACD5A9AA282DAED6002B5ADD /* ResponseObject.swift */,
-				ACD5A9BA282F1053002B5ADD /* ArticleObject.swift */,
+				ACD5A9AC282DAEE4002B5ADD /* API Model */,
 				ACD5A9A7282DAE6C002B5ADD /* Article.swift */,
 			);
 			path = Model;
@@ -113,6 +116,8 @@
 		ACD5A9AC282DAEE4002B5ADD /* API Model */ = {
 			isa = PBXGroup;
 			children = (
+				ACD5A9AA282DAED6002B5ADD /* ResponseObject.swift */,
+				ACD5A9BA282F1053002B5ADD /* ArticleObject.swift */,
 			);
 			path = "API Model";
 			sourceTree = "<group>";
@@ -121,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				ACD5A9B6282E4030002B5ADD /* ArticleListViewModel.swift */,
+				ACD5A9BE282F8E43002B5ADD /* ArticleDetailsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -196,6 +202,8 @@
 			files = (
 				ACD5A994282D9B78002B5ADD /* ArticleListViewController.swift in Sources */,
 				ACD5A9AB282DAED6002B5ADD /* ResponseObject.swift in Sources */,
+				ACD5A9BF282F8E43002B5ADD /* ArticleDetailsViewModel.swift in Sources */,
+				ACD5A9BD282F8B61002B5ADD /* ArticleDetailsViewController.swift in Sources */,
 				ACD5A9BB282F1054002B5ADD /* ArticleObject.swift in Sources */,
 				ACD5A9B1282DB432002B5ADD /* ServiceEnums.swift in Sources */,
 				ACD5A990282D9B78002B5ADD /* AppDelegate.swift in Sources */,

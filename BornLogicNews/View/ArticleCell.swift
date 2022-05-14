@@ -100,18 +100,24 @@ class ArticleCell: UITableViewCell {
 		])
 	}
 	
-	func configureView(withTitle title: String, withImage image: UIImage, withDescription description: String, withAuthor author: String?) {
+	func configureView(withTitle title: String, withImage image: UIImage? = nil, withDescription description: String, withAuthor author: String?) {
 		self.backgroundColor = K.Design.backgroundYellow
 		
 		titleLabel.text = title
-		articleImageView.image = image
+		if let image = image {
+			articleImageView.image = image
+			articleImageView.isHidden = false
+		}
+		else {
+			articleImageView.isHidden = true
+		}
 		descriptionLabel.text = description
 		if let author = author {
 			authorLabel.text = "Author: " + author
+			authorLabel.isHidden = false
 		}
 		else {
 			authorLabel.isHidden = true
 		}
 	}
-	
 }

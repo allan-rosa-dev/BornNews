@@ -12,7 +12,7 @@ protocol ArticleObjectProtocol {
 	var title: String { get }
 	var description: String { get }
 	var url: String { get }
-	var urlToImage: String { get }
+	var urlToImage: String? { get }
 	var publishedAt: String { get }
 	var content: String { get }
 }
@@ -22,7 +22,7 @@ struct ArticleObject: Decodable {
 	let title: String
 	let description: String
 	let url: String
-	let urlToImage: String
+	let urlToImage: String?
 	let publishedAt: String
 	let content: String
 }
