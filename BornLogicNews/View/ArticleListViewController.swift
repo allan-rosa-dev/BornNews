@@ -7,8 +7,11 @@
 
 import UIKit
 
-class ArticleListViewController: UIViewController {
+final class ArticleListViewController: UIViewController {
 	
+	private let articleListViewModel = ArticleListViewModel()
+	
+	//MARK: - View Code UI Elements
 	private enum Layout {
 		static let margin: CGFloat = 10
 		static let halfMargin: CGFloat = margin/2
@@ -93,12 +96,13 @@ class ArticleListViewController: UIViewController {
 	
 	lazy var articlesTableView: UITableView = {
 		let tableView = UITableView()
-		tableView.backgroundColor = K.Design.backgroundYellow
+		tableView.backgroundColor = K.Design.backgroundGreen
 		tableView.translatesAutoresizingMaskIntoConstraints = false
 		
 		return tableView
 	}()
 	
+	//MARK: - View Code Interface Building
 	private func buildViewHierarchy(){
 		queryParametersStackView.addArrangedSubview(languageTextField)
 		queryParametersStackView.addArrangedSubview(sortByTextField)
@@ -131,33 +135,56 @@ class ArticleListViewController: UIViewController {
 			articlesTableView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: Layout.margin),
 			articlesTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
 			articlesTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-			articlesTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -Layout.margin)
+			articlesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
 	}
 	
 	private func configureViews(){
+		self.view.backgroundColor = K.Design.backgroundGreen
 		articlesTableView.backgroundColor = K.Design.backgroundYellow
+		
+		articlesTableView.delegate = self
+		articlesTableView.dataSource = self
+		
+		articlesTableView.register(ArticleCell.self, forCellReuseIdentifier: String(describing: ArticleCell.self))
+		articlesTableView.allowsSelection = false
 	}
 	
 	//MARK: - Life cycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		self.view.backgroundColor = K.Design.backgroundGreen
 		
 		buildViewHierarchy()
 		setupConstraints()
 		configureViews()
+		
+		articleListViewModel.fetchArticles(searchingFor: "Japan") { [weak self] in
+			guard let self = self else { return }
+			self.articlesTableView.reloadData()
+		}
 	}
 }
 
 //MARK: - TableView Delegate & Data Source
 extension ArticleListViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 1
+		return articleListViewModel.articles.count
 	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		return UITableViewCell()
+		guard let cell = articlesTableView.dequeueReusableCell(withIdentifier: String(describing: ArticleCell.self)) as? ArticleCell else { return UITableViewCell() }
+		let article = articleListViewModel.articles[indexPath.row]
+		if let articleImage = article.image {
+			cell.configureView(withTitle: article.title, withImage: articleImage, withDescription: article.description, withAuthor: article.author)
+		}
+		else {
+			cell.configureView(withTitle: article.title, withImage: UIImage(named: "logo-transparent")!, withDescription: article.description, withAuthor: article.author)
+		}
+		
+		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+		return UITableView.automaticDimension
 	}
 }

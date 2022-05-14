@@ -6,19 +6,27 @@
 //
 
 import Foundation
+import UIKit
 
-struct Article: Decodable {
-	let source: Source
-	let author: String
-	let title: String
-	let description: String
-	let url: String
-	let urlToImage: String
-	let publishedAt: String
-	let content: String
-}
-
-struct Source: Decodable {
-	let id: String
-	let name: String
+struct Article: ArticleObjectProtocol {
+	var author: String?
+	var title: String
+	var description: String
+	var url: String
+	var urlToImage: String
+	var publishedAt: String
+	var content: String
+	
+	var image: UIImage?
+	
+	init(from article: ArticleObject, usingImageData data: Data){
+		author = article.author
+		title = article.title
+		description = article.description
+		url = article.url
+		urlToImage = article.urlToImage
+		publishedAt = article.publishedAt
+		content = article.content
+		image = UIImage(data: data)
+	}
 }

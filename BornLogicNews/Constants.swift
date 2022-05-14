@@ -10,8 +10,10 @@ import UIKit
 
 struct K {
 	struct Design {
-		static let titleFont = UIFont(name: "HelveticaNeue", size: 72)
+		static let titleFont = UIFont(name: "HelveticaNeue-CondensedBold", size: 72)
+		static let subtitleFont = UIFont(name: "HelveticaNeue-CondensedBold", size: 36)
 		static let textFont = UIFont(name: "HelveticaNeue", size: 20)
+		
 		static let labelColor = UIColor(named: "label-color")
 		static let textFieldFontColor = UIColor(named: "textfield-font-color")
 		static let textFieldBackgroundColor = UIColor(named: "textfield-background-color")
