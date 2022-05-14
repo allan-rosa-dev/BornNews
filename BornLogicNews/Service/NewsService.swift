@@ -38,7 +38,7 @@ struct NewsService {
 				case .failure(let err):
 					print("--- Failed to fetch data ---")
 					print(err)
-					return
+					completion([])
 			}
 		}
 	}
