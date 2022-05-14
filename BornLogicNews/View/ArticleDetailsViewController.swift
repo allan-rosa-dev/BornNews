@@ -13,7 +13,7 @@ final class ArticleDetailsViewController: UIViewController {
 	
 	//MARK: - View Code UI Elements
 	private enum Layout {
-		static let margin: CGFloat = 10
+		static let margin: CGFloat = 2
 		static let halfMargin: CGFloat = margin/2
 	}
 	
@@ -26,21 +26,21 @@ final class ArticleDetailsViewController: UIViewController {
 		return imageView
 	}()
 	
-	lazy var descriptionView: UIScrollView = {
+	lazy var contentScrollView: UIScrollView = {
 		let scrollView = UIScrollView()
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		
 		return scrollView
 	}()
 	
-	lazy var descriptionContentView: UIView = {
+	lazy var articleContentContentView: UIView = {
 		let contentView = UIView()
 		contentView.translatesAutoresizingMaskIntoConstraints = false
 		
 		return contentView
 	}()
 	
-	lazy var descriptionLabel: UILabel = {
+	lazy var articleContentLabel: UILabel = {
 		let label = UILabel()
 		label.numberOfLines = 0
 		label.font = K.Design.textFont
@@ -66,9 +66,9 @@ final class ArticleDetailsViewController: UIViewController {
 	//MARK: - View Code Interface Building
 	private func buildViewHierarchy(){
 		view.addSubview(articleImageView)
-		view.addSubview(descriptionView)
-		descriptionView.addSubview(descriptionContentView)
-		descriptionContentView.addSubview(descriptionLabel)
+		view.addSubview(contentScrollView)
+		contentScrollView.addSubview(articleContentContentView)
+		articleContentContentView.addSubview(articleContentLabel)
 		view.addSubview(publishDateLabel)
 	}
 	
@@ -79,20 +79,20 @@ final class ArticleDetailsViewController: UIViewController {
 			articleImageView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor),
 			articleImageView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor),
 			
-			descriptionView.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: Layout.halfMargin),
-			descriptionView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor, constant: Layout.margin),
-			descriptionView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor, constant: -Layout.margin),
+			contentScrollView.topAnchor.constraint(equalTo: articleImageView.bottomAnchor, constant: Layout.halfMargin),
+			contentScrollView.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor, constant: Layout.margin),
+			contentScrollView.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor, constant: -Layout.margin),
 			
-			descriptionContentView.topAnchor.constraint(equalTo: descriptionView.topAnchor),
-			descriptionContentView.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor),
-			descriptionContentView.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor),
-			descriptionContentView.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor),
+			articleContentContentView.topAnchor.constraint(equalTo: contentScrollView.topAnchor),
+			articleContentContentView.leadingAnchor.constraint(equalTo: contentScrollView.leadingAnchor),
+			articleContentContentView.trailingAnchor.constraint(equalTo: contentScrollView.trailingAnchor),
+			articleContentContentView.bottomAnchor.constraint(equalTo: contentScrollView.bottomAnchor),
 			
-			descriptionLabel.topAnchor.constraint(equalTo: descriptionContentView.topAnchor),
-			descriptionLabel.widthAnchor.constraint(equalTo: descriptionView.widthAnchor),
-			descriptionLabel.bottomAnchor.constraint(equalTo: descriptionContentView.bottomAnchor),
+			articleContentLabel.topAnchor.constraint(equalTo: articleContentContentView.topAnchor),
+			articleContentLabel.widthAnchor.constraint(equalTo: contentScrollView.widthAnchor),
+			articleContentLabel.bottomAnchor.constraint(equalTo: articleContentContentView.bottomAnchor),
 			
-			publishDateLabel.topAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: Layout.halfMargin),
+			publishDateLabel.topAnchor.constraint(equalTo: contentScrollView.bottomAnchor, constant: Layout.halfMargin),
 			publishDateLabel.leadingAnchor.constraint(equalTo: view.readableContentGuide.leadingAnchor, constant: Layout.margin),
 			publishDateLabel.trailingAnchor.constraint(equalTo: view.readableContentGuide.trailingAnchor, constant: -Layout.margin),
 			publishDateLabel.bottomAnchor.constraint(equalTo: view.readableContentGuide.bottomAnchor, constant: -Layout.margin)
@@ -114,9 +114,19 @@ final class ArticleDetailsViewController: UIViewController {
 			articleImageView.isHidden = true
 		}
 		
-		descriptionLabel.text = articleDetailsViewModel.description
+		articleContentLabel.text = articleDetailsViewModel.content
+		print(articleContentLabel.text)
 		
 		publishDateLabel.text = "Published at " + articleDetailsViewModel.publishDate.formatted()
+	}
+	
+	//MARK: - Action Selector
+	@objc func openSafari() {
+		print("Trying to open safari.")
+		
+		guard let articleURL = articleDetailsViewModel.url else { print("invalid URL: \(articleDetailsViewModel.url)"); return }
+		print("Should open \(articleURL)")
+		UIApplication.shared.canOpenURL(articleURL)
 	}
 	
 	//MARK: - Life cycle
@@ -126,17 +136,7 @@ final class ArticleDetailsViewController: UIViewController {
 		buildViewHierarchy()
 		setupConstraints()
 		configureViews()
-		
-		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openSafari(_:)))
-		articleImageView.addGestureRecognizer(tapGesture)
-		publishDateLabel.addGestureRecognizer(tapGesture)
 	}
 	
-	//MARK: - Action Selector
-	@objc func openSafari(_ sender: UITapGestureRecognizer) {
-		print("Trying to open safari.")
-		guard let articleURL = articleDetailsViewModel.url else { print("invalid URL: \(articleDetailsViewModel.url)"); return }
-		print("Should open \(articleURL)")
-		UIApplication.shared.canOpenURL(articleURL)
-	}
+	
 }

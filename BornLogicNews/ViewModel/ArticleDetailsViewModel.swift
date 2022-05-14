@@ -11,7 +11,7 @@ import UIKit
 protocol ArticleDetailsViewModelProtocol {
 	var title: String { get }
 	var image: UIImage? { get }
-	var description: String { get }
+	var content: String { get }
 	var publishDate: Date { get }
 	var url: URL? { get }
 }
@@ -19,14 +19,14 @@ protocol ArticleDetailsViewModelProtocol {
 struct ArticleDetailsViewModel: ArticleDetailsViewModelProtocol {
 	var title: String = ""
 	var image: UIImage? = nil
-	var description: String = ""
+	var content: String = ""
 	var publishDate: Date = Date.now
 	var url: URL? = nil
 	
 	init(from article: Article){
 		title = article.title
 		image = article.image
-		description = article.description
+		content = article.content
 		publishDate = article.publishDate
 		url = URL(string: article.url)
 	}
