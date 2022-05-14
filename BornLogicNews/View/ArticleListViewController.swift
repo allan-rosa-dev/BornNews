@@ -144,7 +144,6 @@ final class ArticleListViewController: UIViewController {
 	}
 	
 	private func configureViews(){
-		self.navigationController?.isNavigationBarHidden = true
 		self.view.backgroundColor = K.Design.backgroundGreen
 		articlesTableView.backgroundColor = K.Design.backgroundYellow
 		
@@ -179,9 +178,34 @@ final class ArticleListViewController: UIViewController {
 		configureViews()
 		
 		// Hide any input views when user taps on the view
-		let tapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
-		view.addGestureRecognizer(tapGesture)
-		tapGesture.cancelsTouchesInView = false
+		let endEditingTapGesture = UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing))
+		view.addGestureRecognizer(endEditingTapGesture)
+		endEditingTapGesture.cancelsTouchesInView = false
+		
+		let searchTapGesture = UITapGestureRecognizer(target: self, action: #selector(fetchNews))
+		searchTapGesture.cancelsTouchesInView = false
+		logoImageView.addGestureRecognizer(searchTapGesture)
+		logoImageView.isUserInteractionEnabled = true
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		self.navigationController?.isNavigationBarHidden = true
+	}
+	
+	//MARK: - Helper Functions & Action Selectors
+	@objc func fetchNews(){
+		print("FETCHING NEWS! #####")
+		guard let searchText = searchTextField.text, searchText != "" else { return }
+		articlesTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+		articleListViewModel.fetchArticles(searchingFor: searchText,
+										   in: Language(rawValue: languagePickerView.selectedRow(inComponent: 0)),
+										   sortingBy: QuerySortParameter(rawValue: sortParameterPickerView.selectedRow(inComponent: 0)))
+		{ [weak self] in
+			guard let self = self else { return }
+			self.articlesTableView.reloadData()
+		}
 	}
 }
 
@@ -222,14 +246,8 @@ extension ArticleListViewController: UITextFieldDelegate {
 		guard let searchText = textField.text else { return false }
 		textField.resignFirstResponder()
 		
-		articlesTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-		articleListViewModel.fetchArticles(searchingFor: searchText,
-										   in: Language(rawValue: languagePickerView.selectedRow(inComponent: 0)),
-										   sortingBy: QuerySortParameter(rawValue: sortParameterPickerView.selectedRow(inComponent: 0)))
-		{ [weak self] in
-			guard let self = self else { return }
-			self.articlesTableView.reloadData()
-		}
+		fetchNews()
+		
 		return true
 	}
 }

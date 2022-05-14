@@ -115,18 +115,8 @@ final class ArticleDetailsViewController: UIViewController {
 		}
 		
 		articleContentLabel.text = articleDetailsViewModel.content
-		print(articleContentLabel.text)
 		
 		publishDateLabel.text = "Published at " + articleDetailsViewModel.publishDate.formatted()
-	}
-	
-	//MARK: - Action Selector
-	@objc func openSafari() {
-		print("Trying to open safari.")
-		
-		guard let articleURL = articleDetailsViewModel.url else { print("invalid URL: \(articleDetailsViewModel.url)"); return }
-		print("Should open \(articleURL)")
-		UIApplication.shared.canOpenURL(articleURL)
 	}
 	
 	//MARK: - Life cycle
@@ -136,7 +126,22 @@ final class ArticleDetailsViewController: UIViewController {
 		buildViewHierarchy()
 		setupConstraints()
 		configureViews()
+		
+		// Using two different GestureRecognizers because its default implementation doesn't allow us to add the same gesture to more than a single view.
+		let tapImage = UITapGestureRecognizer(target: self, action: #selector(openSafari))
+		let tapPublishLabel = UITapGestureRecognizer(target: self, action: #selector(openSafari))
+		
+		articleImageView.addGestureRecognizer(tapImage)
+		publishDateLabel.addGestureRecognizer(tapPublishLabel)
 	}
 	
+	//MARK: - Action Selector
+	@objc func openSafari() {
+		print("Trying to open safari.")
+
+		guard let articleURL = articleDetailsViewModel.url else { print("invalid URL: \(articleDetailsViewModel.url)"); return }
+		print("Should open \(articleURL)")
+		UIApplication.shared.open(articleURL)
+	}
 	
 }

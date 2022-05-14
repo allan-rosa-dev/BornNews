@@ -44,7 +44,7 @@ struct Article {
 	init(){
 		author = "Allan Rosa"
 		title = "Welcome to BornNews!"
-		description = "To start browsing some news, enter something in Search for News and hit enter!\n\nYou can also select to receive language specific news (English and Portuguese supported only), as well as sort the news to display either Most Popular, Recent, Relevant ones first. \n\nIf you want to read more details, just tap the article.\n\nEnjoy!"
+		description = "To start browsing some news, type something in Search for News and hit enter or tap the BornNews logo!\n\nYou can also select to receive language specific news (English and Portuguese supported only), as well as sort the news to display either Most Popular, Recent, Relevant ones first. \n\nIf you want to read more details, just tap the article.\n\nEnjoy!"
 		url = ""
 		publishDate = Date.now
 		let dummy = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
